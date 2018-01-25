@@ -11,6 +11,12 @@ var html = function(res, string, status) {
 	res.end();
 }
 
+var friendly_page = function(subject, tagline, content) {
+	style = 'background:#7fdba3; zoom: 2; margin:3em; font-family:roboto,arial;';
+	return '<body style="' + style + '"><h3>' +
+		subject + '</h3><h4>' + tagline + '</h4>' + content + '</body>';
+}
+
 var json = function(res, structure, status, mimetype) {
 	mime = mimetype ||  'application/json';
 	res.writeHead(status ||  200, {
@@ -37,12 +43,11 @@ var server = http.createServer(function(req, res) {
 			}, null);
 			break;
 		default:
-			html(res, '<body style="background:#7fdba3; zoom: 2; margin:3em; font-family:roboto,arial;"> \
-				<h3>We are very sorry - something went wrong.</h3> \
-				<h4>We apologize for the inconvenience.</h4> \
+			html(res, friendly_page('We are very sorry - something went wrong.',
+				'We apologize for the inconvenience.', '\
 				Our best engineers are on your case. \
 				Please see <a href="https://oc1.statuspage.io/">our statuspage</a> \
-				for more details.', 500);
+				for more details.'), 500);
 			counter -= 1;
 			failcounter += 1;
 	}
