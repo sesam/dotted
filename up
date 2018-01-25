@@ -1,0 +1,3 @@
+#!/bin/bash
+# A shim for versioning and safely deploying the software in this folder
+/usr/bin/python .dotted/up.py up
