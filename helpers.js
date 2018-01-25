@@ -1,11 +1,19 @@
 // helpers
 
 module.exports = {
+	js: function(res, string, status) {
+		res.writeHead(status || 200, {
+			'Content-Type': 'application/javascript'
+		});
+		res.write(string);
+		res.end();
+	},
+
 	html: function(res, string, status) {
 		res.writeHead(status || 200, {
 			'Content-Type': 'text/html'
 		});
-		res.write('<html><body><p>' + string + '</p></body></html>');
+		res.write(string);
 		res.end();
 	},
 
@@ -17,6 +25,9 @@ module.exports = {
 		res.write('Moved permanently');
 		res.end();
 	},
+
+	next_value: (value) => value + Math.floor(2 * Math.random()) - 1,
+	// next_value: function(value) { return value + Math.floor(2 * Math.random()) - 1 },
 
 	friendly_page: function(subject, tagline, content) {
 		style = 'background:#7fdba3; zoom: 2; margin:3em; font-family:roboto,arial;';

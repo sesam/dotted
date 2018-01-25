@@ -1,3 +1,4 @@
+var fs = require('fs');
 var http = require('http');
 const args = require('yargs').argv;
 var port = args.port || 5001;
@@ -6,6 +7,8 @@ var counter = args.counter ||  0;
 var failcounter = args.failcounter ||  0;
 
 var helpers = require('./helpers');
+var indexhtml = fs.readFileSync('index.html', 'utf8');
+var indexjs = fs.readFileSync('index.js', 'utf8');
 
 var failhandler = function(res) {
 	helpers.html(res, helpers.friendly_page('We are very sorry - something went wrong.',
@@ -17,14 +20,28 @@ var failhandler = function(res) {
 	failcounter += 1;
 }
 
+var arr = function() {
+	a = [];
+	a.push(value = helpers.next_value(value));
+	a.push(value = helpers.next_value(value));
+	a.push(value = helpers.next_value(value));
+	a.push(value = helpers.next_value(value));
+	a.push(value = helpers.next_value(value));
+	a.push(value = helpers.next_value(value));
+	a.push(value = helpers.next_value(value));
+	return a;
+}
+
 var handlers = {
 	'/':
-		(res) => helpers.html(res, 'All ur base.', null),
+		(res) => helpers.html(res, indexhtml, null),
+	'/index.js':
+		(res) => helpers.js(res, indexjs, null),
 	'/status':
-		(res) => helpers.html(res, '', null),
+		(res) => helpers.html(res, 'TODO', null),
 	'/data':
 		(res) => helpers.json(res, {
-			message: 'Hej'
+			value: value = arr(value),
 		}, null),
 	'/favicon.ico':
 		(res) => helpers.redirect(res, 'https://bitcoinwisdom.com/favicon.ico', 302),
