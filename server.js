@@ -30,7 +30,8 @@ var status = [];
 var counter = args.counter ||  0;
 var failcounter = args.failcounter ||  0;
 var server = http.createServer(function(req, res) {
-	switch (res.url) {
+	console.log(req.url);
+	switch (req.url) {
 		case '/':
 			html(res, 'All ur base.', null);
 			break;
@@ -52,6 +53,7 @@ var server = http.createServer(function(req, res) {
 			failcounter += 1;
 	}
 	counter += 1;
+	console.log([counter, failcounter]);
 });
 
 server.listen(port);
