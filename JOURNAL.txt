@@ -1,0 +1,24 @@
+My first thought was to build this with the frontend independent of the backend
+like modern web apps. Cryptographic signing of ticker data. Let the frontend
+show any data it can get that is properly signed. Good DoS protection,
+while updating things requires refreshing the UI through a command channel
+independent of the data source(s). Protected against DoS like a hydra.
+Easy to cache the UI, maybe through CloudFlare, leaving only the dynamic part
+exposed to internet weather.
+Maybe AWS lambdas and "serverless deploy" or zeit.co/now for fast data source
+deploys on AWS infrastructure, and WebRTC for the command channel.
+
+But as we want to stress test, maybe a self-optimizing backend is of value,
+and because of the time constraints, not make it too interesting.
+
+Okay, so nodejs gets optimized and can withstand apache bench tests well.
+It must start on multiple ports. Say port = 5001 + (version % 998) to allow
+at most the last 998 versions to stay alive, a couple days worth even during
+intense development.
+
+git describe and integer version numbers.
+
+nginx is a fast reverse proxy, but would spend time finding the right version.
+lighttp and lua glue code to get the best version already at the backend.
+Use http cache headers to decide which version was last expected, and if client
+is ready to accept a higher version.
