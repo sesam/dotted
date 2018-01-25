@@ -2,61 +2,45 @@ var http = require('http');
 const args = require('yargs').argv;
 var port = args.port || 5001;
 var value = args.value || port;
-
-var html = function(res, string, status) {
-	res.writeHead(status || 200, {
-		'Content-Type': 'text/html'
-	});
-	res.write('<html><body><p>' + string + '</p></body></html>');
-	res.end();
-}
-
-var friendly_page = function(subject, tagline, content) {
-	style = 'background:#7fdba3; zoom: 2; margin:3em; font-family:roboto,arial;';
-	return '<body style="' + style + '"><h3>' +
-		subject + '</h3><h4>' + tagline + '</h4>' + content + '</body>';
-}
-
-var json = function(res, structure, status, mimetype) {
-	mime = mimetype ||  'application/json';
-	res.writeHead(status ||  200, {
-		'Content-Type': mime
-	});
-	res.write(JSON.stringify(structure));
-	res.end();
-}
-
-var status = [];
 var counter = args.counter ||  0;
 var failcounter = args.failcounter ||  0;
+
+var helpers = require('./helpers');
+
+var failhandler = function(res) {
+	helpers.html(res, helpers.friendly_page('We are very sorry - something went wrong.',
+		'We apologize for the inconvenience.', '\
+		Our best engineers are on your case. \
+		Please see <a href="https://oc1.statuspage.io/">our statuspage</a> \
+		for more details.'), 500);
+	counter -= 1;
+	failcounter += 1;
+}
+
+var handlers = {
+	'/':
+		(res) => helpers.html(res, 'All ur base.', null),
+	'/status':
+		(res) => helpers.html(res, '', null),
+	'/data':
+		(res) => helpers.json(res, {
+			message: 'Hej'
+		}, null),
+	'/favicon.ico':
+		(res) => helpers.redirect(res, 'https://bitcoinwisdom.com/favicon.ico', 302),
+}
+
 var server = http.createServer(function(req, res) {
 	console.log(req.url);
-	switch (req.url) {
-		case '/':
-			html(res, 'All ur base.', null);
-			break;
-		case '/status':
-			html(res, '', null);
-			break;
-		case '/data':
-			json(res, {
-				message: 'Hej'
-			}, null);
-			break;
-		default:
-			html(res, friendly_page('We are very sorry - something went wrong.',
-				'We apologize for the inconvenience.', '\
-				Our best engineers are on your case. \
-				Please see <a href="https://oc1.statuspage.io/">our statuspage</a> \
-				for more details.'), 500);
-			counter -= 1;
-			failcounter += 1;
+	if (handler = handlers[req.url]) {
+		handler(res);
+		counter += 1;
+	} else {
+		failhandler(res);
 	}
-	counter += 1;
 	console.log([counter, failcounter]);
 });
 
 server.listen(port);
 console.log('0down: serving on port ' + port);
-
 console.log('0down: debug: params ', process.argv);
