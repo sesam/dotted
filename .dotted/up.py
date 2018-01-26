@@ -24,7 +24,7 @@ else:
     log = open(BENCH_LOG, 'a')
     for i, rps in enumerate(dotted.hammer(BENCH_URLS)):
         str = '%s rps for %s [%s]' % (rps, BENCH_URLS[i], tracking_tag)
-        log.write(str)
+        log.write(str + '\n')
         print str
 
 print 'Pushing update... [%s]' % tracking_tag
