@@ -2,9 +2,10 @@ from sys import argv
 from datetime import datetime as dt
 from subprocess import check_output
 from os import devnull
-import const
+# import const
 import re
 VERSION_PATH = ".dotted/major_version"
+# const.version_path = VERSION_PATH
 SHA1_PATH = ".dotted/current_sha1"
 BENCH_LOG = ".dotted/bench.log"
 BENCH_URLS = [
