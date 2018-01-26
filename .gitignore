@@ -1,3 +1,5 @@
 *.pyc
 node_modules
+.dotted/next_port
+.dotted/port
 .dotted/tracking_tag

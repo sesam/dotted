@@ -10,10 +10,10 @@ var indexjs = helpers.read_or_default('js/index.js', 'alert("Try again later")')
 var major_version = helpers.read_or_default('.dotted/major_version', '0');
 var tracking_tag = helpers.read_or_default('.dotted/tracking_tag', '0');
 
+// Not serverless yet - so failures and some offline support for better looks
 var offlinehtml = helpers.read_or_default('offline.html', '<marquee>PAGE MISSING</marquee>');
 var upupjs = helpers.read_or_default('js/upup.min.js', 'missing upup.min.js');
 var upupswjs = helpers.read_or_default('js/upup.sw.min.js', 'missing upup.min.js');
-
 var failhandler = function(res) {
 	helpers.html(res,
 		helpers.friendly_page('We are very sorry - something went wrong.',
@@ -43,7 +43,7 @@ var arr = function() {
 //
 // Calculate the next value to client
 //
-var versioned_next_value = function(req, major_version) {
+var versioned_next_value = function(req) {
 	return helpers.versioned_json({}, major_version);
 }
 
@@ -61,15 +61,7 @@ var handlers = {
 		(req, res) => helpers.js(res, upupswjs),
 	'/status':
 		(req, res) => helpers.html(res, major_version + ' ' + tracking_tag),
-	'/spawn':
-		(req, res) => helpers.json(res, { 'output': helpers.spawn(next_port()) }),
-	'/hard_checkout':
-		(req, res) => helpers.json(res, { 'output': helpers.hard_checkout() }),
 	'/data':
-		(req, res) => helpers.json(res, helpers.versioned_json({
-			value: value = arr(value),
-		}, major_version), null),
-	'/next_value':
 		(req, res) => helpers.json(res, versioned_next_value(req)),
 	'/favicon.ico':
 		(req, res) => helpers.redirect(res, favicon_url),
