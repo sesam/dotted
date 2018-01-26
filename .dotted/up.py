@@ -25,3 +25,4 @@ else:
         print str
     # todo: prevent push if tracking_tag haven't changed
     print 'Pushing update... [%s]' % tracking_tag
+    dotted.git_tag_and_push()

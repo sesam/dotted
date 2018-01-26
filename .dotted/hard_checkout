@@ -3,7 +3,7 @@ echo "Saving previous state"
 git add . ..
 export TAG=$(date +"%Y%m%d%H%M%S")
 git commit -m 'Saved state $TAG'
-git tag rollback-$TAG
+git tag saved-$TAG
 echo "Resetting files"
 git checkout master
 git reset --hard origin/master

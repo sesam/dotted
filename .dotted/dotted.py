@@ -20,6 +20,16 @@ def silentremove(path):
     if os.path.isfile(path): os.remove(path)
 
 #
+# Git tag and push with overwrite
+# servers tracks itself what it runs, and we're free keep git history clean
+#
+def git_tag_and_push():
+    cmd = 'git tag dotted-%s' % timestamp()
+    check_output(cmd.split())
+    cmd = 'git push origin --force'
+    check_output(cmd.split())
+
+#
 # Get a git reference that uniquely identifies the current code
 #
 def gitref():

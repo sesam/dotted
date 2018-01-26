@@ -1,2 +1,0 @@
-git tag dotted-$(date +"%Y%m%d%H%M%S")
-git push origin --force
