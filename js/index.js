@@ -65,21 +65,6 @@ function myWalk() {
 	return Math.round(2 * Math.random(), 0) - 1.0;
 }
 
-function generatePlots(howMany) {
-    howMany = howMany >>> 0 || 10;
-    var plots = [],
-        index;
-
-    for (index = 0; index < howMany; index += 1) {
-        plots.push({
-            name: 'timeline ' + index,
-            data: getYValues(randomWalk(100, myWalk))
-        });
-    }
-
-    return plots;
-}
-
 $('#container').highcharts({
     title: {
         text: 'Walkers',
@@ -97,5 +82,8 @@ $('#container').highcharts({
         verticalAlign: 'middle',
         borderWidth: 0
     },
-    series: generatePlots(1)
+    series: [{
+        name: 'timeline',
+        data: getYValues(randomWalk(100, myWalk))
+    }],
 });
