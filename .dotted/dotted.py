@@ -1,4 +1,4 @@
-from datetime import datetime as dt
+from datetime import datetime as dt_
 from subprocess import check_output
 import re
 import os
@@ -27,11 +27,16 @@ def gitref():
     return check_output(cmd.split()).rstrip('\n')
 
 #
+# Get a timestamp string formatted like YYYYMMDDHHMMSS
+#
+def timestamp():
+    return dt_.now().strftime('%Y%m%d%H%M%S')
+
+#
 # Track major version upgrades, meant to invite or force a full client reload
 #
 def update_major(ver_path, log_path):
-    today = dt.now()
-    ver = today.strftime('%Y%m%d%H%M%S')
+    ver = timestamp()
     old = read_14(ver_path)
     print 'Updating major version from ' + old + ' to ' + ver
     open(ver_path, "w").write(ver)
