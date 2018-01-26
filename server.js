@@ -21,6 +21,9 @@ var failhandler = function(res) {
 	failcounter += 1;
 }
 
+//
+// Create some sample data
+//
 var arr = function() {
 	a = [];
 	a.push(value = helpers.next_value(value));
@@ -33,27 +36,36 @@ var arr = function() {
 	return a;
 }
 
+//
+// Calculate the next value to client
+//
+var versioned_next_value = function(req, major_version) {
+	return helpers.versioned_json({}, major_version);
+}
+
 var favicon_url = 'https://bitcoinwisdom.com/favicon.ico';
 var handlers = {
 	'/':
-		(res) => helpers.html(res, indexhtml, null),
+		(req, res) => helpers.html(res, indexhtml, null),
 	'/index.js':
-		(res) => helpers.js(res, indexjs, null),
+		(req, res) => helpers.js(res, indexjs, null),
 	'/status':
-		(res) => helpers.html(res, 'TODO', null),
+		(req, res) => helpers.html(res, 'TODO', null),
 	'/data':
-		(res) => helpers.json(res, {
+		(req, res) => helpers.json(res, {
 			value: value = arr(value),
 		}, null),
+	'/next_value':
+		(req, res) => helpers.json(res, versioned_next_value(req), null),
 	'/favicon.ico':
-		(res) => helpers.redirect(res, 'https://bitcoinwisdom.com/favicon.ico', 302),
+		(req, res) => helpers.redirect(res, favicon_url, 302),
 }
 
 var http = require('http');
 var server = http.createServer(function(req, res) {
 	console.log(req.url);
 	if (handler = handlers[req.url]) {
-		handler(res);
+		handler(req, res);
 		counter += 1;
 	} else {
 		failhandler(res);
