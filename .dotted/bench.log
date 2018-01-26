@@ -6,3 +6,7 @@
 2480 rps for http://localhost:5001/data [5e181bb]
 3665 rps for http://localhost:5001/ [5e181bb-dirty]
 4550 rps for http://localhost:5001/data [5e181bb-dirty]
+3754 rps for http://localhost:5001/ [a1dc17c]
+4147 rps for http://localhost:5001/data [a1dc17c]
+3718 rps for http://localhost:5001/ [4b5324d]
+4762 rps for http://localhost:5001/data [4b5324d]
