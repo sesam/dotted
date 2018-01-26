@@ -38,7 +38,7 @@ module.exports = {
 	//
 	// Get the next value, calculated from the previous one
 	//
-	next_value: (value) => value + Math.floor(2 * Math.random()) - 1,
+	next_value: (value) => value + Math.round(2 * Math.random() - 1.0),
 	// next_value: function(value) { return value + Math.floor(2 * Math.random()) - 1 },
 
 	//

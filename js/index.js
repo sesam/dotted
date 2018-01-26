@@ -61,6 +61,10 @@ function getYValues(points) {
     });
 }
 
+function myWalk() {
+	return Math.round(2 * Math.random(), 0) - 1.0;
+}
+
 function generatePlots(howMany) {
     howMany = howMany >>> 0 || 10;
     var plots = [],
@@ -69,7 +73,7 @@ function generatePlots(howMany) {
     for (index = 0; index < howMany; index += 1) {
         plots.push({
             name: 'timeline ' + index,
-            data: getYValues(randomWalk())
+            data: getYValues(randomWalk(100, myWalk))
         });
     }
 
