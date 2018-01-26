@@ -53,26 +53,6 @@ module.exports = {
 	},
 
 	//
-	// Checkout from git and overwrite
-	//
-	hard_checkout: function() {
-		var cmd = 'git fetch; git checkout --hard master';
-		exec(cmd, (err, stdout, stderr) => {
-		  return stdout + stderr + err;
-		});
-	},
-
-	//
-	// Start serving on a port
-	//
-	spawn: function(port) {
-		var cmd = 'node --port ' + port + ' server.js';
-		exec(cmd, (err, stdout, stderr) => {
-		  return stdout + stderr + err;
-		});
-	},
-
-	//
 	// Create a HTML document with headlines
 	// The friendly background color is supposedly liked by both men and women
 	//
