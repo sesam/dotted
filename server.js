@@ -63,14 +63,14 @@ var handlers = {
 
 var http = require('http');
 var server = http.createServer(function(req, res) {
-	console.log(req.url);
+	// console.log(req.url);
 	if (handler = handlers[req.url]) {
 		handler(req, res);
 		counter += 1;
 	} else {
 		failhandler(res);
 	}
-	console.log([counter, failcounter]);
+	// console.log([counter, failcounter]);
 });
 
 server.listen(port);
