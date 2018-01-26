@@ -1,8 +1,8 @@
 from datetime import datetime as dt
 from subprocess import check_output
 import re
-from os import devnull
-sinkhole = open(devnull, 'w')
+import os
+sinkhole = open(os.devnull, 'w')
 
 #
 # Reads a timestamp YYYYMMDDHHMMSS, or defaults to all zeroes
@@ -21,6 +21,9 @@ def gitref(branch):
     cmd = 'git describe --always --dirty'.split()
     return check_output(cmd)
 
+#
+# Track major version upgrades, meant to invite or force a full client reload
+#
 def update_major(ver_path, log_path):
     today = dt.now()
     ver = today.strftime('%Y%m%d%H%M%S')

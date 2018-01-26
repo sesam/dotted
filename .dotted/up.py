@@ -19,5 +19,4 @@ else:
         str = '%s rps for %s [%s]' % (rps, BENCH_URLS[i], tracking_tag)
         log.write(str + '\n')
         print str
-
-print 'Pushing update... [%s]' % tracking_tag
+    print 'Pushing update... [%s]' % tracking_tag
