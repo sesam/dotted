@@ -61,6 +61,8 @@ var handlers = {
 		(req, res) => helpers.js(res, upupswjs),
 	'/status':
 		(req, res) => helpers.html(res, major_version + ' ' + tracking_tag),
+	'/hard_checkout':
+		(req, res) => helpers.json(res, { 'output': helpers.hard_checkout() }),
 	'/data':
 		(req, res) => helpers.json(res, helpers.versioned_json({
 			value: value = arr(value),
