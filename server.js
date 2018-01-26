@@ -1,10 +1,12 @@
 const args = require('yargs').argv;
 var port = args.port || 5001;
+var next_port = 5001 + (port-5000) % 998;
 var value = args.value || port;
 var counter = args.counter ||  0;
 var failcounter = args.failcounter ||  0;
 
 var helpers = require('./helpers');
+helpers.save_ports('.dotted', port, next_port);
 var indexhtml = helpers.read_or_default('index.html', '<marquee>PAGE MISSING</marquee>');
 var indexjs = helpers.read_or_default('js/index.js', 'alert("Try again later")');
 var major_version = helpers.read_or_default('.dotted/major_version', '0');

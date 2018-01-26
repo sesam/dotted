@@ -1,6 +1,21 @@
 // helpers
+var fs = require('fs');
 
 module.exports = {
+	//
+	// save port numbers
+	//
+	save_ports: function(path, port, next_port) {
+		fs.writeFile(path + "/port", port, function(err) {
+			if(err) { console.log(err); }
+			console.log("saved %s in %s/port", port, path);
+		});
+		fs.writeFile(path + "/next_port", next_port, function(err) {
+			if(err) { console.log(err); }
+			console.log("saved %s in %s/next_port", next_port, path);
+		});
+	},
+
 	//
 	// Return a javascript document
 	//
