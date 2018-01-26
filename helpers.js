@@ -4,8 +4,8 @@ module.exports = {
 	//
 	// Return a javascript document
 	//
-	js: function(res, string, status) {
-		res.writeHead(status || 200, {
+	js: function(res, string) {
+		res.writeHead(200, {
 			'Content-Type': 'application/javascript'
 		});
 		res.write(string);
@@ -15,8 +15,8 @@ module.exports = {
 	//
 	// Return a html document
 	//
-	html: function(res, string, status) {
-		res.writeHead(status || 200, {
+	html: function(res, string) {
+		res.writeHead(200, {
 			'Content-Type': 'text/html'
 		});
 		res.write(string);
@@ -26,12 +26,12 @@ module.exports = {
 	//
 	// Redirect the browser
 	//
-	redirect: function(res, url, status) {
-		res.writeHead(status || 302, {
+	redirect: function(res, url) {
+		res.writeHead(302, {
 			'Location': url,
 			'Content-Type': 'text/html',
 		});
-		res.write('Moved permanently');
+		res.write('Moved');
 		res.end();
 	},
 
@@ -64,10 +64,9 @@ module.exports = {
 	//
 	// Return a JSON document
 	//
-	json: function(res, structure, status, mimetype) {
-		mime = mimetype ||  'application/json';
-		res.writeHead(status ||  200, {
-			'Content-Type': mime
+	json: function(res, structure) {
+		res.writeHead(200, {
+			'Content-Type': 'application/json'
 		});
 		res.write(JSON.stringify(structure));
 		res.end();

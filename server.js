@@ -50,25 +50,25 @@ var versioned_next_value = function(req, major_version) {
 var favicon_url = 'https://bitcoinwisdom.com/favicon.ico';
 var handlers = {
 	'/':
-		(req, res) => helpers.html(res, indexhtml, null),
+		(req, res) => helpers.html(res, indexhtml),
 	'/offline.html':
-		(req, res) => helpers.html(res, offlinehtml, null),
+		(req, res) => helpers.html(res, offlinehtml),
 	'/index.js':
-		(req, res) => helpers.js(res, indexjs, null),
+		(req, res) => helpers.js(res, indexjs),
 	'/upup.min.js':
-		(req, res) => helpers.js(res, upupjs, null),
+		(req, res) => helpers.js(res, upupjs),
 	'/upup.sw.min.js':
-		(req, res) => helpers.js(res, upupswjs, null),
+		(req, res) => helpers.js(res, upupswjs),
 	'/status':
-		(req, res) => helpers.html(res, major_version + ' ' + tracking_tag, null),
+		(req, res) => helpers.html(res, major_version + ' ' + tracking_tag),
 	'/data':
 		(req, res) => helpers.json(res, helpers.versioned_json({
 			value: value = arr(value),
 		}, major_version), null),
 	'/next_value':
-		(req, res) => helpers.json(res, versioned_next_value(req), null),
+		(req, res) => helpers.json(res, versioned_next_value(req)),
 	'/favicon.ico':
-		(req, res) => helpers.redirect(res, favicon_url, 302),
+		(req, res) => helpers.redirect(res, favicon_url),
 }
 
 var http = require('http');
