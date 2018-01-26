@@ -9,7 +9,7 @@ BENCH_URLS = [
     'http://localhost:%d/data' % PORT,
 ]
 
-tracking_tag = dotted.gitref('master').rstrip('\n')
+tracking_tag = dotted.gitref()
 open(TRACKING_TAG_PATH, "w").write(tracking_tag)
 task = argv[1]
 if task == 'major':

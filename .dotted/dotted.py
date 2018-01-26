@@ -22,10 +22,9 @@ def silentremove(path):
 #
 # Get a git reference that uniquely identifies the current code
 #
-def gitref(branch):
-    # cmd = 'git rev-parse --verify HEAD'.split()
-    cmd = 'git describe --always --dirty'.split()
-    return check_output(cmd)
+def gitref():
+    cmd = 'git describe --always --dirty'
+    return check_output(cmd.split()).rstrip('\n')
 
 #
 # Track major version upgrades, meant to invite or force a full client reload
