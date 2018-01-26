@@ -1,0 +1,4 @@
+git clone https://github.com/sesam/dotted
+cd dotted
+npm install
+node server.js
