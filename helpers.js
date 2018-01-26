@@ -42,6 +42,16 @@ module.exports = {
 	// next_value: function(value) { return value + Math.floor(2 * Math.random()) - 1 },
 
 	//
+	// Read a file, or if missing, return a default value
+	//
+	read_or_default: function(path, fallback) {
+		var fs = require('fs');
+		if (fs.existsSync(path)) {
+			return fs.readFileSync(path, 'utf8');
+		} else return fallback;
+	},
+
+	//
 	// Create a HTML document with headlines
 	// The friendly background color is supposedly liked by both men and women
 	//

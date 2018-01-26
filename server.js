@@ -1,5 +1,3 @@
-var fs = require('fs');
-var http = require('http');
 const args = require('yargs').argv;
 var port = args.port || 5001;
 var value = args.value || port;
@@ -7,8 +5,9 @@ var counter = args.counter ||  0;
 var failcounter = args.failcounter ||  0;
 
 var helpers = require('./helpers');
-var indexhtml = fs.readFileSync('index.html', 'utf8');
-var indexjs = fs.readFileSync('index.js', 'utf8');
+var indexhtml = helpers.read_or_default('index.html', '<marquee>PAGE MISSING</marquee>');
+var indexjs = helpers.read_or_default('index.js', 'alert("Try again later")');
+var major_version = helpers.read_or_default('.dotted/major_version', '0');
 
 var failhandler = function(res) {
 	helpers.html(res,
@@ -34,6 +33,7 @@ var arr = function() {
 	return a;
 }
 
+var favicon_url = 'https://bitcoinwisdom.com/favicon.ico';
 var handlers = {
 	'/':
 		(res) => helpers.html(res, indexhtml, null),
@@ -49,6 +49,7 @@ var handlers = {
 		(res) => helpers.redirect(res, 'https://bitcoinwisdom.com/favicon.ico', 302),
 }
 
+var http = require('http');
 var server = http.createServer(function(req, res) {
 	console.log(req.url);
 	if (handler = handlers[req.url]) {
