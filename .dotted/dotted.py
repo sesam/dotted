@@ -27,8 +27,11 @@ def update_major(ver_path, log_path):
     old = read_14(ver_path)
     print 'Updating major version from ' + old + ' to ' + ver
     open(ver_path, "w").write(ver)
-    check_output(['git', 'add', ver_path, log_path])
-    check_output(['git', 'commit', '-m', 'major ' + old + ' to ' + ver])
+    try:
+        check_output(['git', 'add', ver_path, log_path])
+        check_output(['git', 'commit', '-m', 'major ' + old + ' to ' + ver])
+    except:
+        print "\nMissing version or benchmarks. \nRun . up and try again.\n"
 
 #
 # Collect benchmarks
