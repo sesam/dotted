@@ -6,4 +6,5 @@ git commit -m 'Saved state $TAG'
 git tag rollback-$TAG
 echo "Resetting files"
 git checkout master
-git reset --hard
+git reset --hard origin/master
+npm install

@@ -1,4 +1,6 @@
 export NEXT_PORT=$(cat next_port)
+if [ "$DOTTED_SERVER" == "" ]
+then export NEXT_PORT=6001;
+fi
 echo "Trying port $NEXT_PORT"
-cd ..
-node --port $NEXT_PORT server.js
+node server.js --port $NEXT_PORT

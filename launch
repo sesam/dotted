@@ -1,1 +1,6 @@
-ssh -i devenv-key.pem bitnami@$SERVER ". .dotted/launch"
+if [ "$DOTTED_SERVER" != "" ]
+then echo Launching on $DOTTED_SERVER && ssh -i $DOTTED_KEY bitnami@$DOTTED_SERVER "cd dotted;. .dotted/hard_checkout; . .dotted/launch"
+else
+echo "Missing export DOTTED_SERVER=35.157.159.231 # 34.216.38.17"
+echo "and export DOTTED_KEY=~/.ssh/key-eu1"
+fi
