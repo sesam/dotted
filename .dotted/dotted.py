@@ -14,6 +14,12 @@ def read_14(path):
         return '0' * 14
 
 #
+# Delete a file silently
+#
+def silentremove(path):
+    if os.path.isfile(path): os.remove(path)
+
+#
 # Get a git reference that uniquely identifies the current code
 #
 def gitref(branch):

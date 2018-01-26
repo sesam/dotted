@@ -13,6 +13,9 @@ tracking_tag = dotted.gitref('master').rstrip('\n')
 task = argv[1]
 if task == 'major':
     dotted.update_major(VERSION_PATH, BENCH_LOG)
+elif task == 'purge':
+    dotted.silentremove(VERSION_PATH)
+    dotted.silentremove(BENCH_LOG)
 else:
     log = open(BENCH_LOG, 'a')
     for i, rps in enumerate(dotted.hammer(BENCH_URLS)):
