@@ -22,7 +22,6 @@ var failhandler = function(res) {
 			Please see <a href="https://oc1.statuspage.io/">our statuspage</a> \
 			for more details.'),
 		500);
-	counter -= 1;
 	failcounter += 1;
 }
 
@@ -74,14 +73,12 @@ var handlers = {
 
 var http = require('http');
 var server = http.createServer(function(req, res) {
-	// console.log(req.url);
 	if (handler = handlers[req.url]) {
 		handler(req, res);
 		counter += 1;
 	} else {
 		failhandler(res);
 	}
-	// console.log([counter, failcounter]);
 });
 
 server.listen(port);
