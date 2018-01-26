@@ -52,9 +52,9 @@ var handlers = {
 	'/status':
 		(req, res) => helpers.html(res, 'TODO', null),
 	'/data':
-		(req, res) => helpers.json(res, {
+		(req, res) => helpers.json(res, helpers.versioned_json({
 			value: value = arr(value),
-		}, null),
+		}, major_version), null),
 	'/next_value':
 		(req, res) => helpers.json(res, versioned_next_value(req), null),
 	'/favicon.ico':

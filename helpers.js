@@ -72,4 +72,18 @@ module.exports = {
 		res.write(JSON.stringify(structure));
 		res.end();
 	},
+
+	//
+	// Adds versioning and status needed by a dotted client/server system
+	//
+	versioned_json: function(content, major_version) {
+		content['.dotted'] = {
+			'major_version': major_version,
+			// 'sha1': 'missing',
+			'migrate': false,
+			'status_message': 'ok',
+			'status_detail': '',
+		};
+		return content;
+	},
 }
