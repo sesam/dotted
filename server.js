@@ -11,11 +11,13 @@ var indexhtml = fs.readFileSync('index.html', 'utf8');
 var indexjs = fs.readFileSync('index.js', 'utf8');
 
 var failhandler = function(res) {
-	helpers.html(res, helpers.friendly_page('We are very sorry - something went wrong.',
-		'We apologize for the inconvenience.', '\
-		Our best engineers are on your case. \
-		Please see <a href="https://oc1.statuspage.io/">our statuspage</a> \
-		for more details.'), 500);
+	helpers.html(res,
+		helpers.friendly_page('We are very sorry - something went wrong.',
+			'We apologize for the inconvenience.', '\
+			Our best engineers are on your case. \
+			Please see <a href="https://oc1.statuspage.io/">our statuspage</a> \
+			for more details.'),
+		500);
 	counter -= 1;
 	failcounter += 1;
 }
