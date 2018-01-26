@@ -23,6 +23,7 @@ to find the latest version instead of relying on DNS.
 lighttp and lua glue code to get the best version already at the backend.
 Use http cache headers to decide which version was last expected, and if client
 is ready to accept a higher version.
+A simpler approach is to just use multiple ports for now.
 
 Graph script picks values from a remote API:
    (time, value) => [time+1, next_value(value)]
@@ -38,3 +39,9 @@ JSON responses should include these keys
 
 Launch with:
 curl -L goo.gl/u8dCzH|bash
+
+. help lists all the Dotted commands
+. up     # check for performance regressions
+. major  # when there's a major update and users should reload
+. push   # push to github
+. launch # pull from github and launch on a new port

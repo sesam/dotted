@@ -1,0 +1,6 @@
+echo
+echo ". help   # Lists all the Dotted commands:"
+echo ". up     # check for performance regressions"
+echo ". major  # when there's a major update and users should reload"
+echo ". push   # push to github"
+echo ". launch # pull from github and launch on a new port"

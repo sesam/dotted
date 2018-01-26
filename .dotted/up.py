@@ -3,13 +3,18 @@ import dotted
 VERSION_PATH = ".dotted/major_version"
 TRACKING_TAG_PATH = ".dotted/tracking_tag"
 BENCH_LOG = ".dotted/bench.log"
+PORT = 5001
+NEXT_PORT_PATH = '.dotted/next_port'
 BENCH_URLS = [
-    'http://localhost:5001/',
-    'http://localhost:5001/data',
+    'http://localhost:%d/' % PORT,
+    'http://localhost:%d/data' % PORT,
 ]
 
 tracking_tag = dotted.gitref('master').rstrip('\n')
 open(TRACKING_TAG_PATH, "w").write(tracking_tag)
+print PORT
+print "%d" % (5001 + (PORT-5000) % 998)
+open(NEXT_PORT_PATH, "w").write("%d" % (5001 + (PORT-5000) % 998))
 task = argv[1]
 if task == 'major':
     dotted.update_major(VERSION_PATH, BENCH_LOG)

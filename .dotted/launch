@@ -1,0 +1,4 @@
+export NEXT_PORT=$(cat next_port)
+echo "Trying port $NEXT_PORT"
+cd ..
+node --port $NEXT_PORT server.js

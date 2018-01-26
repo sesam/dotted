@@ -1,0 +1,1 @@
+ssh -i devenv-key.pem bitnami@$SERVER ". .dotted/launch"
