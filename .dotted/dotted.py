@@ -1,3 +1,4 @@
+from datetime import datetime as dt
 from subprocess import check_output
 import re
 from os import devnull
@@ -20,7 +21,11 @@ def gitref(branch):
     cmd = 'git describe --always --dirty'.split()
     return check_output(cmd)
 
-def update_major(old, ver, ver_path, log_path):
+def update_major(ver_path, log_path):
+    today = dt.now()
+    ver = today.strftime('%Y%m%d%H%M%S')
+    old = read_14(ver_path)
+    print 'Updating major version from ' + old + ' to ' + ver
     open(ver_path, "w").write(ver)
     check_output(['git', 'add', ver_path, log_path])
     check_output(['git', 'commit', '-m', 'major ' + old + ' to ' + ver])
