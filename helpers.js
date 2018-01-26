@@ -1,4 +1,5 @@
 // helpers
+const { exec } = require('child_process');
 
 module.exports = {
 	//
@@ -56,6 +57,16 @@ module.exports = {
 	//
 	hard_checkout: function() {
 		var cmd = 'git fetch; git checkout --hard master';
+		exec(cmd, (err, stdout, stderr) => {
+		  return stdout + stderr + err;
+		});
+	},
+
+	//
+	// Start serving on a port
+	//
+	spawn: function(port) {
+		var cmd = 'node --port ' + port + ' server.js';
 		exec(cmd, (err, stdout, stderr) => {
 		  return stdout + stderr + err;
 		});

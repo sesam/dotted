@@ -3,6 +3,7 @@ var port = args.port || 5001;
 var value = args.value || port;
 var counter = args.counter ||  0;
 var failcounter = args.failcounter ||  0;
+var next_port = () => (5001 + (port-5000) % 998);
 
 var helpers = require('./helpers');
 var indexhtml = helpers.read_or_default('index.html', '<marquee>PAGE MISSING</marquee>');
@@ -61,6 +62,8 @@ var handlers = {
 		(req, res) => helpers.js(res, upupswjs),
 	'/status':
 		(req, res) => helpers.html(res, major_version + ' ' + tracking_tag),
+	'/spawn':
+		(req, res) => helpers.json(res, { 'output': helpers.spawn(next_port()) }),
 	'/hard_checkout':
 		(req, res) => helpers.json(res, { 'output': helpers.hard_checkout() }),
 	'/data':
