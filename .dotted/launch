@@ -1,6 +1,6 @@
-export NEXT_PORT=$(cat next_port)
-if [ "$DOTTED_SERVER" == "" ]
+export NEXT_PORT=$(cat .dotted/next_port)
+if [ "$NEXT_PORT" == "" ]
 then export NEXT_PORT=6001;
 fi
 echo "Trying port $NEXT_PORT"
-node server.js --port $NEXT_PORT
+nohup node server.js --port $NEXT_PORT > $NEXT_PORT.log 2>&1 &

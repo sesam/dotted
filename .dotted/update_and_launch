@@ -1,0 +1,3 @@
+cd dotted
+. .dotted/hard_checkout
+. .dotted/launch
