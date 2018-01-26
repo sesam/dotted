@@ -35,3 +35,6 @@ JSON responses should include these keys
 	'migrate': if present, an address:port where the client's session moves to
   'status_message': user-friendly server status message
 	'status_detail': where the uptime-page for this service is located
+
+Launch with:
+curl -L goo.gl/u8dCzH|bash
