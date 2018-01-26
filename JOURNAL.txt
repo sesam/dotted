@@ -18,7 +18,20 @@ intense development.
 
 git describe and integer version numbers.
 
-nginx is a fast reverse proxy, but would spend time finding the right version.
+nginx is my go-to fast safe reverse proxy, but frontend would have to know how
+to find the latest version instead of relying on DNS.
 lighttp and lua glue code to get the best version already at the backend.
 Use http cache headers to decide which version was last expected, and if client
 is ready to accept a higher version.
+
+Graph script picks values from a remote API:
+   (time, value) => [time+1, next_value(value)]
+Incoming data can be out of order.
+
+JSON responses should include these keys
+'.dotted':
+  'major_version': date and time as a long integer (sortable)
+	'sha1': sha1 (from git) of the code
+	'migrate': if present, an address:port where the client's session moves to
+  'status_message': user-friendly server status message
+	'status_detail': where the uptime-page for this service is located
