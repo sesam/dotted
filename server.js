@@ -8,6 +8,7 @@ var helpers = require('./helpers');
 var indexhtml = helpers.read_or_default('index.html', '<marquee>PAGE MISSING</marquee>');
 var indexjs = helpers.read_or_default('index.js', 'alert("Try again later")');
 var major_version = helpers.read_or_default('.dotted/major_version', '0');
+var tracking_tag = helpers.read_or_default('.dotted/tracking_tag', '0');
 
 var failhandler = function(res) {
 	helpers.html(res,
@@ -50,7 +51,7 @@ var handlers = {
 	'/index.js':
 		(req, res) => helpers.js(res, indexjs, null),
 	'/status':
-		(req, res) => helpers.html(res, 'TODO', null),
+		(req, res) => helpers.html(res, major_version + ' ' + tracking_tag, null),
 	'/data':
 		(req, res) => helpers.json(res, helpers.versioned_json({
 			value: value = arr(value),
