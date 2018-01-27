@@ -1,7 +1,7 @@
 const args = require('yargs').argv;
 var port = args.port || 5001;
-var next_port = 5001 + (port-5000) % 998;
-var value = args.value || port;
+var next_port = 5001 + (port - 5000) % 998;
+var value = args.value || 1000 * Math.random();
 var counter = args.counter ||  0;
 var failcounter = args.failcounter ||  0;
 
@@ -89,6 +89,9 @@ var server = http.createServer(function(req, res) {
 	}
 });
 
-server.listen(port);
-console.log('0down: serving on port ' + port);
-console.log('0down: debug: params ', process.argv);
+var timeout = 5000/3.0 * (3.0 + Math.random());
+console.log('0down: waiting ' + Math.round(timeout/1000.0, 2) + 's -- params ', process.argv);
+setTimeout(function() {
+	server.listen(port);
+	console.log('0down: serving on port ' + port);
+}, timeout);
