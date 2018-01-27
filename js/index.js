@@ -39,27 +39,17 @@ var boxMullerRandom = (function () {
 
 function randomWalk(steps, randFunc) {
     steps = steps >>> 0 || 100;
-    if (typeof randFunc !== 'function') {
-        randFunc = boxMullerRandom;
+    var arr = Array.apply(0, Array(steps));
+    arr[0] = 0;
+    for (var t = 1; t < steps; t += 1) {
+        arr[t] = arr[t-1] + randFunc();
     }
-
-    var points = [],
-        value = 0,
-        t;
-
-    for (t = 0; t < steps; t += 1) {
-        value += randFunc();
-        points.push([t, value]);
-    }
-
-    return points;
+    // console.log(arr.reduce(sum_reducer));
+    return arr;
 }
 
-function getYValues(points) {
-    return points.map(function (point) {
-        return point[1];
-    });
-}
+var next_value = (value) => Math.round(value + 2 * Math.random() - 1.0);
+// const sum_reducer = (accumulator, currentValue) => accumulator + currentValue;
 
 function myWalk() {
 	return Math.round(2 * Math.random(), 0) - 1.0;
@@ -84,6 +74,6 @@ $('#container').highcharts({
     },
     series: [{
         name: 'timeline',
-        data: getYValues(randomWalk(100, myWalk))
+        data: randomWalk(100, boxMullerRandom), // myWalk),
     }],
 });
