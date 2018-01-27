@@ -70,7 +70,7 @@ var handlers = {
 	'/upup.sw.min.js':
 		(req, res) => helpers.js(res, upupswjs),
 	'/status':
-		(req, res) => helpers.json(res, current),
+		(req, res) => helpers.json(res, [current, deployed, target]),
 	'/deployed':
 		(req, res) => helpers.json(res, redeployed()),
 	'/data':
