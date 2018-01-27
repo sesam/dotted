@@ -89,13 +89,12 @@ module.exports = {
 	//
 	// Adds versioning and status needed by a dotted client/server system
 	//
-	versioned_json: function(content, major_version) {
-		content['.dotted'] = {
-			'major_version': major_version,
-			// 'sha1': 'missing',
-			'migrate': false,
-			'status_message': 'ok',
-			'status_detail': '',
+	versioned_json: function(content, current, deployed, target) {
+		content.dotted = {
+			major: current.major,
+			tag: current.tag,
+			deployed_tag: deployed.tag,
+			migrate: current.major < target.major,
 		};
 		return content;
 	},
