@@ -9,8 +9,17 @@ var helpers = require('./helpers');
 helpers.save_ports('.dotted', port, next_port);
 var indexhtml = helpers.read_or_default('index.html', '<marquee>PAGE MISSING</marquee>');
 var indexjs = helpers.read_or_default('js/index.js', 'alert("Try again later")');
-var major_version = helpers.read_or_default('.dotted/major_version', '0');
-var tracking_tag = helpers.read_or_default('.dotted/tracking_tag', '0');
+var dotted = function() {
+	return {
+		major: helpers.read_or_default('.dotted/major_version', null),
+		tag: helpers.read_or_default('.dotted/tracking_tag', null),
+		port: helpers.read_or_default('.dotted/port', '0'),
+		next_port: helpers.read_or_default('.dotted/next_port', '0'),
+	}
+}
+var current = dotted();
+var deployed = null;
+var redeployed = () => ({ running: current, last: deployed = dotted() });
 
 // Not serverless yet - so failures and some offline support for better looks
 var offlinehtml = helpers.read_or_default('offline.html', '<marquee>PAGE MISSING</marquee>');
@@ -46,7 +55,7 @@ var arr = function() {
 // Calculate the next value to client
 //
 var versioned_next_value = function(req) {
-	return helpers.versioned_json({}, major_version);
+	return helpers.versioned_json({}, current.major_version);
 }
 
 var favicon_url = 'https://bitcoinwisdom.com/favicon.ico';
@@ -62,7 +71,9 @@ var handlers = {
 	'/upup.sw.min.js':
 		(req, res) => helpers.js(res, upupswjs),
 	'/status':
-		(req, res) => helpers.html(res, major_version + ' ' + tracking_tag),
+		(req, res) => helpers.json(res, current),
+	'/deployed':
+		(req, res) => helpers.json(res, redeployed()),
 	'/data':
 		(req, res) => helpers.json(res, versioned_next_value(req)),
 	'/favicon.ico':
