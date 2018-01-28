@@ -51,7 +51,7 @@ module.exports = {
 	//
 	// Get the next value, calculated from the previous one
 	//
-	next_value: (value) => value + Math.round(2 * Math.random() - 1.0),
+	next_value: (value) => Math.round(value + 2 * Math.random() - 1.0, 3),
 
 	//
 	// Read a file, or if missing, return a default value
