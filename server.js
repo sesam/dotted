@@ -1,13 +1,13 @@
 var http = require('http');
 const args = require('yargs').argv;
-var port = args.port || 5001;
+var helpers = require('./helpers');
+var port = parseInt(args.port || helpers.read_or_default('.dotted/port', 5001));
 var next_port = (port) => 5001 + (port - 5000) % 998;
 var ip = '127.0.0.1';
 var value = args.value || 1000 * Math.random();
 var counter = args.counter ||  0;
 var failcounter = args.failcounter ||  0;
 
-var helpers = require('./helpers');
 var indexhtml = helpers.read_or_default('index.html', '<marquee>PAGE MISSING</marquee>');
 var indexjs = helpers.read_or_default('js/index.js', 'alert("Try again later")');
 
@@ -108,11 +108,11 @@ var handlers = {
 	'/upup.sw.min.js':
 		(req, res) => helpers.js(res, upupswjs),
 	'/status':
-		(req, res) => helpers.json(res, [current, deployed, target]),
+		(req, res) => helpers.js(res, JSON.stringify([current, deployed, target])),
 	'/deployed':
-		(req, res) => helpers.json(res, redeployed()),
+		(req, res) => helpers.js(res, JSON.stringify(redeployed())),
 	'/data':
-		(req, res) => helpers.json(res, versioned(req)),
+		(req, res) => helpers.js(res, JSON.stringify(versioned(req))),
 	'/favicon.ico':
 		(req, res) => helpers.redirect(res, favicon_url),
 }

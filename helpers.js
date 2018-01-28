@@ -24,8 +24,7 @@ module.exports = {
 			'Access-Control-Allow-Origin': '*',
 			'Content-Type': 'application/javascript'
 		});
-		res.write(string);
-		res.end();
+		res.end(string);
 	},
 
 	//
@@ -35,8 +34,7 @@ module.exports = {
 		res.writeHead(200, {
 			'Content-Type': 'text/html'
 		});
-		res.write(string);
-		res.end();
+		res.end(string);
 	},
 
 	//
@@ -47,8 +45,7 @@ module.exports = {
 			'Location': url,
 			'Content-Type': 'text/html',
 		});
-		res.write('Moved');
-		res.end();
+		res.end('Moved');
 	},
 
 	//
@@ -74,18 +71,6 @@ module.exports = {
 		style = 'background:#7fdba3; zoom: 2; margin:3em; font-family:roboto,arial;';
 		return '<body style="' + style + '"><h3>' +
 			subject + '</h3><h4>' + tagline + '</h4>' + content + '</body>';
-	},
-
-	//
-	// Return a JSON document
-	//
-	json: function(res, structure) {
-		res.writeHead(200, {
-			'Access-Control-Allow-Origin': '*',
-			'Content-Type': 'application/json'
-		});
-		res.write(JSON.stringify(structure));
-		res.end();
 	},
 
 	//
