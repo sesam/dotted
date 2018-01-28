@@ -48,11 +48,11 @@ function randomWalk(steps, randFunc) {
     return arr;
 }
 
-var next_value = (value) => Math.round(value + 2 * Math.random() - 1.0);
+var next_value = (value) => value + 2 * Math.random() - 1.0;
 // const sum_reducer = (accumulator, currentValue) => accumulator + currentValue;
 
 function myWalk() {
-	return Math.round(2 * Math.random(), 0) - 1.0;
+	return 2 * Math.random() - 1.0;
 }
 
 $('#container').highcharts({
@@ -64,7 +64,8 @@ $('#container').highcharts({
         type: 'linear'
     },
     tooltip: {
-        valueSuffix: ' units'
+        valueSuffix: 'x',
+        pointFormat: '{point.y:.2f}',
     },
     legend: {
         layout: 'vertical',
