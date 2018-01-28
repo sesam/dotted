@@ -61,9 +61,13 @@ function ticker_recieved(data) {
   $('h2#ticker span').text(data['value']);
   $('h2#ticker code').text(data.value);
 }
-var ticker_refresh = () => $.getJSON('/data', ticker_recieved);
+var ticker_refresh = () => {
+  $.getJSON('/data', ticker_recieved).fail((err) => {
+    console.log('error ' + err + ' so trying by enabling jQuery CORS support');
+    $.support.cors = true;
+  });
+}
 var ticker_interval = 500;
-$.support.cors = true;
 $(document).ready(() => {
   console.log('index.js ticker interval ' + ticker_interval);
   setInterval(ticker_refresh, ticker_interval);
