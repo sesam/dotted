@@ -101,7 +101,7 @@ var handlers = {
 		(req, res) => helpers.html(res, indexhtml),
 	'/offline.html':
 		(req, res) => helpers.html(res, offlinehtml),
-	'/index.js':
+	'/js/index.js':
 		(req, res) => helpers.js(res, indexjs),
 	'/upup.min.js':
 		(req, res) => helpers.js(res, upupjs),
@@ -137,7 +137,7 @@ server.on('error', (err) => {
 	start_server();
 });
 function start_server() {
-	console.log('trying to listen on' + port);
+	console.log('trying to listen on ' + port);
 	server.listen(port);
 }
 var timeout = 5/3.0 * (3.0 + Math.random());

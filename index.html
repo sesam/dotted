@@ -3,9 +3,9 @@
 	<!-- http://jsfiddle.net/Xotic750/3rfT6/ -->
 	<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 	<script src="http://code.highcharts.com/highcharts.js"></script> -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/6.0.4/highcharts.js"></script>
-	<script src="index.js" defer="defer"></script>
+	<script src="js/index.js" defer="defer"></script>
 	<style>
 	#container {
 	    min-width: 310px;
@@ -17,6 +17,7 @@
 </head>
 <body>
 	<h1>A random walk</h1>
+	<h2 id="ticker">Ticker value: <span>(loading...)</span> <code></code></h2>
 	<div id="container"></div>
 	<h5>Current version is</h5>
 	<iframe src="/status" style="width:100%"></iframe>
@@ -28,7 +29,7 @@
 		'content-url': 'offline.html',
 		'assets': [
 			'index.css',
-			'index.js',
+			'js/index.js',
 			'status',
 		],
 	});

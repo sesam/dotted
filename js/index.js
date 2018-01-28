@@ -55,6 +55,20 @@ function myWalk() {
 	return 2 * Math.random() - 1.0;
 }
 
+var last_data = {};
+function ticker_recieved(data) {
+  last_data = data;
+  $('h2#ticker span').text(data['value']);
+  $('h2#ticker code').text(data.value);
+}
+var ticker_refresh = () => $.getJSON('/data', ticker_recieved);
+var ticker_interval = 500;
+$.support.cors = true;
+$(document).ready(() => {
+  console.log('index.js ticker interval ' + ticker_interval);
+  setInterval(ticker_refresh, ticker_interval);
+});
+
 $('#container').highcharts({
     title: {
         text: 'Walkers',
@@ -78,3 +92,4 @@ $('#container').highcharts({
         data: randomWalk(100, boxMullerRandom), // myWalk),
     }],
 });
+console.log('index.js loaded');

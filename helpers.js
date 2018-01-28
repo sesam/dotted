@@ -21,6 +21,7 @@ module.exports = {
 	//
 	js: function(res, string) {
 		res.writeHead(200, {
+			'Access-Control-Allow-Origin': '*',
 			'Content-Type': 'application/javascript'
 		});
 		res.write(string);
@@ -80,6 +81,7 @@ module.exports = {
 	//
 	json: function(res, structure) {
 		res.writeHead(200, {
+			'Access-Control-Allow-Origin': '*',
 			'Content-Type': 'application/json'
 		});
 		res.write(JSON.stringify(structure));
