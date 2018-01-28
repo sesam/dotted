@@ -138,7 +138,7 @@ server.on('error', (err) => {
 });
 function start_server() {
 	console.log('trying to listen on ' + port);
-	server.listen(port);
+	server.listen(port, '0.0.0.0');
 }
 var timeout = 5/3.0 * (3.0 + Math.random());
 console.log('0down: waiting ' + Math.round(timeout, 1) + 's -- params ', process.argv);
