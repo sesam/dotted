@@ -45,3 +45,8 @@ curl -L goo.gl/u8dCzH|bash
 . major  # when there's a major update and users should reload
 . push   # push to github
 . launch # pull from github and launch on a new port
+
+Varnish can be used to always have a startoff-location, say on port 80,
+and then all users can get guided along to their own ports and servers
+from there onward. Nice network topology here:
+https://www.lullabot.com/articles/configuring-varnish-for-highavailability-with-multiple-web-servers
