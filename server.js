@@ -40,11 +40,12 @@ function take_target(res) {
 }
 function check_target() {
 	if (current.major >= deployed.major) {
-		return console.log('nothing new ' +
-			JSON.stringify(deployed) + ' == ' + JSON.stringify(current));
+		return console.log('not a major update ' +
+			JSON.stringify(deployed) + ' vs ' + JSON.stringify(current));
 	}
 	console.log('checking deploy ' + JSON.stringify(deployed));
-	var deployed_url = 'http://' + ip + ':' + deployed.port + '/status';
+	var deployed_url = 'http://' + ip + ':' + deployed.port +
+		'/status?value=' + value + '&time=' + (new Date()).valueOf();
 	var req = http.get(deployed_url, take_target);
 	req.on('socket', (socket) => {
 		socket.setTimeout(800);
