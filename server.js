@@ -30,9 +30,10 @@ function take_target(res) {
 	res.on('data', (data) => (body += data));
 	res.on('end', () => {
 		console.log(body);
+		if (res.statusCode > 400) { console.log('HTTP code ' + res.statusCode); return; }
 		// todo: use params from response
 		js = JSON.parse(body);
-		target = deployed.clone(); // probably exactly what we want
+		target = Object.assign({}, deployed); // probably exactly what we want
 		target.port = js.port; // but let's make sure
 		target.major = js.major;
 		target.tag = js.tag;
@@ -45,14 +46,23 @@ function check_target() {
 
 	console.log(JSON.stringify(deployed) + ' vs \n' + JSON.stringify(current));
 	console.log('checking deploy ' + JSON.stringify(deployed));
-	var deployed_url = 'http://' + ip + ':' + deployed.port +
-		'/status?value=' + value + '&time=' + (new Date()).valueOf();
-	var req = http.get(deployed_url, take_target);
+	// var deployed_url = 'http://' + ip + ':' + deployed.port + '/status';
+	var post_data = value + '\n' + (new Date()).valueOf();
+	var post_options = {
+	      host: ip,
+	      port: deployed.port,
+	      path: '/status',
+	      method: 'POST',
+	      headers: {
+	          'Content-Type': 'text/text',
+	          'Content-Length': Buffer.byteLength(post_data)
+	      }
+	  };
+	var req = http.request(post_options, take_target);
+	req.end(post_data);
 	req.on('socket', (socket) => {
 		socket.setTimeout(800);
 		socket.on('timeout', () => req.abort());
-		console.log('0down: check_target timeout - retrying in 500 ');
-		if (current.major >= deployed.major) setTimeout(check_target, 500);
 	});
 	req.on('error', function(err) {
 		console.log('0down: check_target error - retrying in 500 ' + err.code);
