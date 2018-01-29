@@ -25,7 +25,7 @@ upgrade onto people before it was even finished or fully usable.
 
 ### Usage
 
-After git cloning dotted, try `. home` in the terminal. Trust, but verify!
+After git cloning dotted, try `cd dotted; . home` in the terminal. Trust, but verify!
 
 ````
 . help   # Lists all the Dotted commands:
