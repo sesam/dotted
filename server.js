@@ -39,10 +39,11 @@ function take_target(res) {
 	});
 }
 function check_target() {
-	if (current.major >= deployed.major) {
-		return console.log('not a major update ' +
-			JSON.stringify(deployed) + ' vs ' + JSON.stringify(current));
-	}
+	if (current.tag != deployed.tag) console.log('app change detected');
+	if (current.major >= deployed.major) console.log('not a major update');
+	else console.log('*** major update ***');
+
+	console.log(JSON.stringify(deployed) + ' vs \n' + JSON.stringify(current));
 	console.log('checking deploy ' + JSON.stringify(deployed));
 	var deployed_url = 'http://' + ip + ':' + deployed.port +
 		'/status?value=' + value + '&time=' + (new Date()).valueOf();
