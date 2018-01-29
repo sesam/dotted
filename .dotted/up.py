@@ -5,8 +5,8 @@ TRACKING_TAG_PATH = ".dotted/tracking_tag"
 BENCH_LOG = ".dotted/bench.log"
 PORT = 5001
 BENCH_URLS = [
-    'http://localhost:%d/' % PORT,
-    'http://localhost:%d/data' % PORT,
+    'http://127.0.0.1:%d/' % PORT,
+    'http://127.0.0.1:%d/data' % PORT,
 ]
 
 tracking_tag = dotted.gitref()
