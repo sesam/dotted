@@ -3,7 +3,7 @@ import dotted
 VERSION_PATH = ".dotted/major_version"
 TRACKING_TAG_PATH = ".dotted/tracking_tag"
 BENCH_LOG = ".dotted/bench.log"
-PORT = 5001
+PORT = dotted.read_int('.dotted/port', 5001)
 BENCH_URLS = [
     'http://127.0.0.1:%d/' % PORT,
     'http://127.0.0.1:%d/data' % PORT,

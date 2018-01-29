@@ -14,6 +14,17 @@ def read_14(path):
         return '0' * 14
 
 #
+# Reads an integer, or defaults to all zeroes
+#
+def read_int(path, default):
+    try:
+        text = open(path, "r").read(10)
+        n = int(text)
+        return n
+    except IOError:
+        return default
+
+#
 # Delete a file silently
 #
 def silentremove(path):
