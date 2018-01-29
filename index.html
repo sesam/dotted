@@ -13,14 +13,24 @@
 	    margin: 0 auto;
 			border: 1px solid gold;
 	}
+	#ver {
+		position: aboslute;
+		float: right;
+		right: 0;
+		height: 40px;
+		width: 300px;
+		padding: 0.5em;
+		border: 1px dashed gray;
+	}
 	</style>
 </head>
 <body>
-	<h1>A random walk</h1>
+	<div id="ver">Current: <span>...</span><br>Next: <b>...</b></div>
+	<h1>A random walk chart</h1>
 	<h2 id="ticker">Ticker value: <span>(loading...)</span> <code></code></h2>
 	<div id="container"></div>
-	<h5>Current version is</h5>
-	<iframe src="/status" style="width:100%"></iframe>
+	<h5>Current known versions are</h5>
+	<iframe src="/status" style="width:80%; height: 90px"></iframe>
 </body>
 
 <script src="/upup.min.js"></script>

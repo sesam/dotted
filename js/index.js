@@ -58,8 +58,12 @@ function myWalk() {
 var last_data = {};
 function ticker_recieved(data) {
   last_data = data;
-  $('h2#ticker span').text(data['value']);
-  $('h2#ticker code').text(data.value);
+  $('h2#ticker span').text(data.value);
+  $('h2#ticker code').text(data.time);
+  $('div#ver span').text(data.dotted.major + ' [' + data.dotted.tag + ']');
+  if (data.dotted.deployed_tag != data.dotted.tag) {
+    $('div#ver b').text(next_tag);
+  }
 }
 var ticker_refresh = () => {
   $.getJSON('/data', ticker_recieved).fail((err) => {
@@ -75,7 +79,7 @@ $(document).ready(() => {
 
 $('#container').highcharts({
     title: {
-        text: 'Walkers',
+        text: 'Value',
         x: -20 //center
     },
     xAxis: {
@@ -92,7 +96,7 @@ $('#container').highcharts({
         borderWidth: 0
     },
     series: [{
-        name: 'timeline',
+        name: 'x',
         data: randomWalk(100, boxMullerRandom), // myWalk),
     }],
 });

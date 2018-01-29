@@ -92,7 +92,8 @@ var arr = function() {
 // Calculate the next value to client
 //
 var versioned = (req) => helpers.versioned_json({
-	value: helpers.next_value(value)
+	value: helpers.next_value(value),
+	time: new Date(),
 }, current, deployed, target);
 
 var favicon_url = 'https://bitcoinwisdom.com/favicon.ico';
