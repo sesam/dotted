@@ -14,3 +14,7 @@
 5578 rps for http://localhost:5001/data [3f02a76-dirty]
 3735 rps for http://127.0.0.1:5001/ [2408a9e-dirty]
 4016 rps for http://127.0.0.1:5001/data [2408a9e-dirty]
+4511 rps for http://127.0.0.1:5001/ [36730e6]
+4500 rps for http://127.0.0.1:5001/data [36730e6]
+4690 rps for http://127.0.0.1:5001/ [29182b1-dirty]
+3222 rps for http://127.0.0.1:5001/data [29182b1-dirty]
