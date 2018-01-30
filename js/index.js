@@ -72,32 +72,73 @@ var ticker_refresh = () => {
   });
 }
 var ticker_interval = 500;
+
+var chart; // integration point
+function requestData() {
+    $.getJSON( // fetches graph data points
+        '/data',
+        function(data) {
+            var shift = chart.series[0].data.length > 20; // progress
+            console.log(data);
+            console.log([new Date(data.time).getTime(), data.value]);
+            chart.series[0].addPoint([data.time, data.value], true, shift);
+            setTimeout(requestData, 500);
+        },
+    );
+}
+
 $(document).ready(() => {
   console.log('index.js ticker interval ' + ticker_interval);
   setInterval(ticker_refresh, ticker_interval);
+
+  chart = new Highcharts.Chart({
+      chart: {
+          renderTo: 'container',
+          defaultSeriesType: 'spline',
+          events: { load: requestData }
+      },
+      title: { text: 'Ticker chart' },
+      xAxis: {
+          type: 'datetime',
+          // tickPixelInterval: 150,
+          // maxZoom: 20 * 1000
+      },
+      yAxis: {
+          minPadding: 0.2,
+          maxPadding: 0.2,
+          title: { text: 'Value', margin: 80 }
+      },
+      tooltip: {
+          // valueSuffix: 'x',
+          pointFormat: '{point.y:.2f}',
+      },
+      legend: {
+          layout: 'vertical',
+          align: 'right',
+          verticalAlign: 'middle',
+          borderWidth: 0
+      },
+      series: [{ name: 'x', data: [] }]
+  });
 });
 
-$('#container').highcharts({
-    title: {
-        text: 'Value',
-        x: -20 //center
-    },
-    xAxis: {
-        type: 'linear'
-    },
-    tooltip: {
-        valueSuffix: 'x',
-        pointFormat: '{point.y:.2f}',
-    },
-    legend: {
-        layout: 'vertical',
-        align: 'right',
-        verticalAlign: 'middle',
-        borderWidth: 0
-    },
-    series: [{
-        name: 'x',
-        data: randomWalk(100, boxMullerRandom), // myWalk),
-    }],
-});
+// $('#container').highcharts({
+//     title: { text: 'Value', x: -20 }, //center
+//     xAxis: { type: 'linear' },
+//     tooltip: {
+//         valueSuffix: 'x',
+//         pointFormat: '{point.y:.2f}',
+//     },
+//     legend: {
+//         layout: 'vertical',
+//         align: 'right',
+//         verticalAlign: 'middle',
+//         borderWidth: 0
+//     },
+//     series: [{
+//         name: 'x',
+//         data: randomWalk(100, boxMullerRandom), // myWalk),
+//     }],
+// });
+
 console.log('index.js loaded');
