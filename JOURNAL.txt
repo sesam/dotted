@@ -20,31 +20,15 @@ git describe and integer version numbers.
 
 nginx is my go-to fast safe reverse proxy, but frontend would have to know how
 to find the latest version instead of relying on DNS.
-lighttp and lua glue code to get the best version already at the backend.
-Use http cache headers to decide which version was last expected, and if client
-is ready to accept a higher version.
-A simpler approach is to just use multiple ports for now.
+Another option is lighttp and lua glue code to get the best version already at
+the backend. Could use http cache headers to decide which version was last
+expected, and if client is ready to accept a higher version.
 
-Graph script picks values from a remote API:
-   (time, value) => [time+1, next_value(value)]
-Incoming data can be out of order.
+Choosing a simpler approach for now, just using multiple ports.
 
-JSON responses should include these keys
-'.dotted':
-  'major_version': date and time as a long integer (sortable)
-	'sha1': sha1 (from git) of the code
-	'migrate': if present, an address:port where the client's session moves to
-  'status_message': user-friendly server status message
-	'status_detail': where the uptime-page for this service is located
-
-Launch with:
-curl -L goo.gl/u8dCzH|bash
-
-. help lists all the Dotted commands
-. up     # check for performance regressions
-. major  # when there's a major update and users should reload
-. push   # push to github
-. launch # pull from github and launch on a new port
+New data points could be defined through a function unless there is a real
+ticker data source. Some interesting random walk function perhaps.
+(time, value) => [time+1, next_value(value)]
 
 Varnish can be used to always have a startoff-location, say on port 80,
 and then all users can get guided along to their own ports and servers

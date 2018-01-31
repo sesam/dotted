@@ -29,8 +29,48 @@ After git cloning dotted, try `cd dotted; . home` in the terminal. Trust, but ve
 
 ````
 . help   # Lists all the Dotted commands:
+. up     # check performance and push
+. major  # when there's a major update and users should reload
+. launch # pull from github and launch on a new port
+````
+
+### Dotted's JSON structure
+
+__Partly implemented__
+
+JSON responses should include these keys:
+````
+'dotted':
+  'major': major version based on date and time as a long integer (sortable)
+  'tag': sha1 (from git) of the code
+  'migrate': false, or an address:port where the client's session migrates to
+  'status_message': user-friendly server status message
+  'status_detail': where the uptime-page for this service is located
+````
+
+A basic setup script to install "dotted" into a VM can be launched with:
+
+````
+curl -L goo.gl/u8dCzH|bash
+````
+
+And after that, cd into the folder `dotted` to have these __folder local__
+commands available:
+
+````
+. help   # lists all the Dotted commands
 . up     # check for performance regressions
 . major  # when there's a major update and users should reload
 . push   # push to github
 . launch # pull from github and launch on a new port
 ````
+
+The full train of thoughts is in the [JOURNAL text](JOURNAL.txt)
+
+### TODOs
+
+The live ticker and chart gets data from /data asynch and responses might come
+in out of order.
+
+- check that Highcharts handles out of order data nicely
+- avoid updating ticker box from newer to older data
