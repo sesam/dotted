@@ -54,17 +54,6 @@ A basic setup script to install "dotted" into a VM can be launched with:
 curl -L goo.gl/u8dCzH|bash
 ````
 
-And after that, cd into the folder `dotted` to have these __folder local__
-commands available:
-
-````
-. help   # lists all the Dotted commands
-. up     # check for performance regressions
-. major  # when there's a major update and users should reload
-. push   # push to github
-. launch # pull from github and launch on a new port
-````
-
 The full train of thoughts is in the [JOURNAL text](JOURNAL.txt)
 
 ### TODOs
