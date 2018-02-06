@@ -18,7 +18,7 @@ upgrade onto people before it was even finished or fully usable.
 ### Goals
 
  - Let users stay on their version as long as their session is open.
- - Let minor backend upgrades and important bugfixes to happen silently
+ - Allow minor backend upgrades and important bugfixes to happen silently
  - Let the user upgrade voluntarily
  - All new sessions get the newest deployed code
  - Keep things very cacheable

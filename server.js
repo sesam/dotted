@@ -86,21 +86,6 @@ var failhandler = function(res) {
 }
 
 //
-// Create some sample data
-//
-var arr = function() {
-	a = [];
-	a.push(value = helpers.next_value(value));
-	a.push(value = helpers.next_value(value));
-	a.push(value = helpers.next_value(value));
-	a.push(value = helpers.next_value(value));
-	a.push(value = helpers.next_value(value));
-	a.push(value = helpers.next_value(value));
-	a.push(value = helpers.next_value(value));
-	return a;
-}
-
-//
 // Calculate the next value to client
 //
 var versioned = (req) => helpers.versioned_json({

@@ -8,6 +8,10 @@ backend n5 { .host = "127.0.0.1"; .port ="5005"; .probe = { .url = "/status"; .i
 backend n6 { .host = "127.0.0.1"; .port ="5006"; .probe = { .url = "/status"; .interval = 5s; .timeout = 1s; .window = 5;.threshold = 3; }}
 backend n7 { .host = "127.0.0.1"; .port ="5007"; .probe = { .url = "/status"; .interval = 5s; .timeout = 1s; .window = 5;.threshold = 3; }}
 backend n8 { .host = "127.0.0.1"; .port ="5008"; .probe = { .url = "/status"; .interval = 5s; .timeout = 1s; .window = 5;.threshold = 3; }}
+backend n9 { .host = "127.0.0.1"; .port ="5009"; .probe = { .url = "/status"; .interval = 5s; .timeout = 1s; .window = 5;.threshold = 3; }}
+backend n10 { .host = "127.0.0.1"; .port ="5010"; .probe = { .url = "/status"; .interval = 5s; .timeout = 1s; .window = 5; .threshold = 3; }}
+backend n11 { .host = "127.0.0.1"; .port ="5011"; .probe = { .url = "/status"; .interval = 5s; .timeout = 1s; .window = 5; .threshold = 3; }}
+backend n12 { .host = "127.0.0.1"; .port ="5012"; .probe = { .url = "/status"; .interval = 5s; .timeout = 1s; .window = 5; .threshold = 3; }}
 
 import directors;
 
@@ -21,6 +25,10 @@ sub vcl_init {
 	vdir.add_backend(n6);
 	vdir.add_backend(n7);
 	vdir.add_backend(n8);
+	vdir.add_backend(n9);
+	vdir.add_backend(n10);
+	vdir.add_backend(n11);
+	vdir.add_backend(n12);
 }
 
 sub vcl_recv {
