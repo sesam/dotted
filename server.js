@@ -100,17 +100,17 @@ var handlers = {
 	'/offline.html':
 		(req, res) => helpers.html(res, offlinehtml),
 	'/js/index.js':
-		(req, res) => helpers.js(res, indexjs),
+		(req, res) => helpers.js(res, indexjs, false),
 	'/upup.min.js':
-		(req, res) => helpers.js(res, upupjs),
+		(req, res) => helpers.js(res, upupjs, false),
 	'/upup.sw.min.js':
-		(req, res) => helpers.js(res, upupswjs),
+		(req, res) => helpers.js(res, upupswjs, false),
 	'/status':
-		(req, res) => helpers.js(res, JSON.stringify([current, deployed, target])),
+		(req, res) => helpers.js(res, [current, deployed, target], true),
 	'/deployed':
-		(req, res) => helpers.js(res, JSON.stringify(redeployed())),
+		(req, res) => helpers.js(res, redeployed(), true),
 	'/data':
-		(req, res) => helpers.js(res, JSON.stringify(versioned(req))),
+		(req, res) => helpers.js(res, versioned(req), true),
 	'/favicon.ico':
 		(req, res) => helpers.redirect(res, favicon_url),
 }

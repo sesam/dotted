@@ -19,12 +19,14 @@ module.exports = {
 	//
 	// Return a javascript document
 	//
-	js: function(res, string) {
-		res.writeHead(200, {
+	js: function(res, content, dynamic) {
+		headers = {
 			'Access-Control-Allow-Origin': '*',
 			'Content-Type': 'application/javascript'
-		});
-		res.end(string);
+		};
+		if (dynamic) headers['Cache-Control'] = 'no-cache, max-age=0';
+		res.writeHead(200, headers );
+		res.end(dynamic ? JSON.stringify(content): content);
 	},
 
 	//
