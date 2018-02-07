@@ -1,18 +1,33 @@
 var ticker_interval = 500; // milliseconds between ticker updates
 var chart; // integration point
+var data_url = window.location + 'data';
+var last_data = null;
 
 function ticker_recieved(data) {
+  last_data = data;
   $('h2#ticker span').text(data.value);
   $('h2#ticker code').text(data.time);
+  $('h2#ticker pre').text(data.dotted.port);
+
+  // Version info and upgrade button
+  var tag_changed = data.dotted.deployed_tag != data.dotted.tag;
   $('div#ver span').text(data.dotted.major + ' [' + data.dotted.tag + ']');
-  if (data.dotted.deployed_tag != data.dotted.tag) {
-    $('div#ver b').text(next_tag);
-  }
+  $('div#ver b').text(data.dotted.migrate);
+  $('div#ver button').text(tag_changed ? 'Upgrade to ' + data.dotted.deployed_tag : '..');
+
   add_data_to_chart(data);
 }
 
+function dotted_upgrade() {
+  event.stopImmediatePropagation();
+  old_url = data_url;
+  data = last_data;
+  data_url = data_url.replace(data.dotted.port, data.dotted.next_port);
+  $('div#ver button').text('data_url changed from ' + old_url + ' to ' + data_url);
+}
+
 var ticker_refresh = () => {
-  $.getJSON('/data', ticker_recieved).fail((err) => {
+  $.getJSON(data_url, ticker_recieved).fail((err) => {
     console.log('error ' + err + ' so trying by enabling jQuery CORS support');
     $.support.cors = true;
   });

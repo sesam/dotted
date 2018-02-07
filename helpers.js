@@ -84,6 +84,8 @@ module.exports = {
 			tag: current.tag,
 			deployed_tag: deployed.tag,
 			migrate: current.major < target.major,
+			port: current.port,
+			next_port: target.port,
 		};
 		return content;
 	},
