@@ -8,6 +8,7 @@ function ticker_recieved(data) {
   if (data.dotted.deployed_tag != data.dotted.tag) {
     $('div#ver b').text(next_tag);
   }
+  add_data_to_chart(data);
 }
 
 var ticker_refresh = () => {
@@ -17,18 +18,9 @@ var ticker_refresh = () => {
   });
 }
 
-var chart; // integration point
-function requestData() {
-    $.getJSON( // fetches graph data points
-        '/data',
-        function(data) {
-            var shift = chart.series[0].data.length > 20; // progress
-            console.log(data);
-            console.log([new Date(data.time).getTime(), data.value]);
-            chart.series[0].addPoint([data.time, data.value], true, shift);
-            setTimeout(requestData, 500);
-        },
-    );
+function add_data_to_chart(data) {
+  var shift = chart.series[0].data.length > 20; // move chart forward
+  chart.series[0].addPoint([data.time, data.value], true, shift);
 }
 
 $(document).ready(() => {
@@ -39,7 +31,6 @@ $(document).ready(() => {
       chart: {
           renderTo: 'container',
           defaultSeriesType: 'spline',
-          events: { load: requestData }
       },
       title: { text: 'Ticker chart' },
       xAxis: {
