@@ -29,8 +29,14 @@ $(document).ready(() => {
 
   chart = new Highcharts.Chart({
       chart: {
+          animation: false,
           renderTo: 'container',
-          defaultSeriesType: 'spline',
+          defaultSeriesType: 'line',
+      },
+      plotOptions: {
+          series: {
+              step: 'center'
+          }
       },
       title: { text: 'Ticker chart' },
       xAxis: {
