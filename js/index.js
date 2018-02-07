@@ -1,6 +1,7 @@
-var last_data = {};
+var ticker_interval = 500; // milliseconds between ticker updates
+var chart; // integration point
+
 function ticker_recieved(data) {
-  last_data = data;
   $('h2#ticker span').text(data.value);
   $('h2#ticker code').text(data.time);
   $('div#ver span').text(data.dotted.major + ' [' + data.dotted.tag + ']');
@@ -8,13 +9,13 @@ function ticker_recieved(data) {
     $('div#ver b').text(next_tag);
   }
 }
+
 var ticker_refresh = () => {
   $.getJSON('/data', ticker_recieved).fail((err) => {
     console.log('error ' + err + ' so trying by enabling jQuery CORS support');
     $.support.cors = true;
   });
 }
-var ticker_interval = 500; // milliseconds between ticker updates
 
 var chart; // integration point
 function requestData() {
@@ -43,8 +44,6 @@ $(document).ready(() => {
       title: { text: 'Ticker chart' },
       xAxis: {
           type: 'datetime',
-          // tickPixelInterval: 150,
-          // maxZoom: 20 * 1000
       },
       yAxis: {
           minPadding: 0.2,
@@ -52,7 +51,6 @@ $(document).ready(() => {
           title: { text: 'Value', margin: 80 }
       },
       tooltip: {
-          // valueSuffix: 'x',
           pointFormat: '{point.y:.2f}',
       },
       legend: {
