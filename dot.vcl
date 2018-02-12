@@ -1,18 +1,19 @@
 vcl 4.0;
 
-backend n1 { .host = "127.0.0.1"; .port ="5001"; .probe = { .url = "/status"; .interval = 5s; .timeout = 1s; .window = 5;.threshold = 3; }}
-backend n2 { .host = "127.0.0.1"; .port ="5002"; .probe = { .url = "/status"; .interval = 5s; .timeout = 1s; .window = 5;.threshold = 3; }}
-backend n3 { .host = "127.0.0.1"; .port ="5003"; .probe = { .url = "/status"; .interval = 5s; .timeout = 1s; .window = 5;.threshold = 3; }}
-backend n4 { .host = "127.0.0.1"; .port ="5004"; .probe = { .url = "/status"; .interval = 5s; .timeout = 1s; .window = 5;.threshold = 3; }}
-backend n5 { .host = "127.0.0.1"; .port ="5005"; .probe = { .url = "/status"; .interval = 5s; .timeout = 1s; .window = 5;.threshold = 3; }}
-backend n6 { .host = "127.0.0.1"; .port ="5006"; .probe = { .url = "/status"; .interval = 5s; .timeout = 1s; .window = 5;.threshold = 3; }}
-backend n7 { .host = "127.0.0.1"; .port ="5007"; .probe = { .url = "/status"; .interval = 5s; .timeout = 1s; .window = 5;.threshold = 3; }}
-backend n8 { .host = "127.0.0.1"; .port ="5008"; .probe = { .url = "/status"; .interval = 5s; .timeout = 1s; .window = 5;.threshold = 3; }}
-backend n9 { .host = "127.0.0.1"; .port ="5009"; .probe = { .url = "/status"; .interval = 5s; .timeout = 1s; .window = 5;.threshold = 3; }}
-backend n10 { .host = "127.0.0.1"; .port ="5010"; .probe = { .url = "/status"; .interval = 5s; .timeout = 1s; .window = 5; .threshold = 3; }}
-backend n11 { .host = "127.0.0.1"; .port ="5011"; .probe = { .url = "/status"; .interval = 5s; .timeout = 1s; .window = 5; .threshold = 3; }}
-backend n12 { .host = "127.0.0.1"; .port ="5012"; .probe = { .url = "/status"; .interval = 5s; .timeout = 1s; .window = 5; .threshold = 3; }}
+backend n1  { .host = "127.0.0.1"; .port ="5001"; .probe = { .url = "/status"; .interval = 0.2s; .timeout = 0.18s; .window = 5; .threshold = 2; }}
+backend n2  { .host = "127.0.0.1"; .port ="5002"; .probe = { .url = "/status"; .interval = 0.2s; .timeout = 0.18s; .window = 5; .threshold = 2; }}
+backend n3  { .host = "127.0.0.1"; .port ="5003"; .probe = { .url = "/status"; .interval = 0.2s; .timeout = 0.18s; .window = 5; .threshold = 2; }}
+backend n4  { .host = "127.0.0.1"; .port ="5004"; .probe = { .url = "/status"; .interval = 0.2s; .timeout = 0.18s; .window = 5; .threshold = 2; }}
+backend n5  { .host = "127.0.0.1"; .port ="5005"; .probe = { .url = "/status"; .interval = 0.2s; .timeout = 0.18s; .window = 5; .threshold = 2; }}
+backend n6  { .host = "127.0.0.1"; .port ="5006"; .probe = { .url = "/status"; .interval = 0.2s; .timeout = 0.18s; .window = 5; .threshold = 2; }}
+backend n7  { .host = "127.0.0.1"; .port ="5007"; .probe = { .url = "/status"; .interval = 0.2s; .timeout = 0.18s; .window = 5; .threshold = 2; }}
+backend n8  { .host = "127.0.0.1"; .port ="5008"; .probe = { .url = "/status"; .interval = 0.2s; .timeout = 0.18s; .window = 5; .threshold = 2; }}
+backend n9  { .host = "127.0.0.1"; .port ="5009"; .probe = { .url = "/status"; .interval = 0.2s; .timeout = 0.18s; .window = 5; .threshold = 2; }}
+backend n10 { .host = "127.0.0.1"; .port ="5010"; .probe = { .url = "/status"; .interval = 0.2s; .timeout = 0.18s; .window = 5; .threshold = 2; }}
+backend n11 { .host = "127.0.0.1"; .port ="5011"; .probe = { .url = "/status"; .interval = 0.2s; .timeout = 0.18s; .window = 5; .threshold = 2; }}
+backend n12 { .host = "127.0.0.1"; .port ="5012"; .probe = { .url = "/status"; .interval = 0.2s; .timeout = 0.18s; .window = 5; .threshold = 2; }}
 
+import std;
 import directors;
 
 sub vcl_init {
@@ -31,9 +32,25 @@ sub vcl_init {
 	vdir.add_backend(n12);
 }
 
+sub vcl_backend_response {
+	set beresp.grace = 30s; // grace period 30s if backend is unresponsive
+}
+
+sub vcl_hit {
+	if (obj.ttl >= 0s) {
+	return (deliver); // cached and fresh
+	}
+	if (!std.healthy(req.backend_hint) && (obj.ttl + obj.grace > 0s)) {
+		// wanted backend is unhealthy. Deliver slightly stale cacheable content
+		return (deliver);
+	} else {
+		return (miss);
+	}
+}
+
 sub vcl_recv {
-  # Respond to incoming requests.
-  set req.backend_hint = vdir.backend();
+	# Respond to incoming requests.
+	set req.backend_hint = vdir.backend();
 
 	if (req.url ~ "^/(cron|install|robots|humans)") {
 		# crawlers bye bye
