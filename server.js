@@ -2,7 +2,7 @@ var http = require('http');
 const args = require('yargs').argv;
 var helpers = require('./helpers');
 var port = parseInt(args.port || helpers.read_or_default('.dotted/port', 5001));
-var next_port = (port) => 5001 + (port - 5000) % 998;
+var next_port = (port) => 5001 + (port - 5000) % 12;
 var ip = '127.0.0.1';
 var value = args.value || 1000 * Math.random();
 var counter = args.counter ||  0;
@@ -128,11 +128,16 @@ server.on('listening', () => {
 	console.log('0down: serving on port ' + port);
 	helpers.save_ports('.dotted', port, next_port(port));
 });
+var last_port_retry = port;
 server.on('error', (err) => {
 	console.log('error: ' + err);
 	port = next_port(port);
-	console.log('since something failed, we try next port = ' + port);
-	start_server();
+	if (port == last_port_retry) {
+		console.log('no ports free after trying the whole range from ' + last_port_retry + ' through the whole range');
+	} else {
+		console.log('binding port failed, so try next port = ' + port);
+		start_server();
+	}
 });
 function start_server() {
 	console.log('trying to listen on ' + port);
