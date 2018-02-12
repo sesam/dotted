@@ -24,7 +24,11 @@ module.exports = {
 			'Access-Control-Allow-Origin': '*',
 			'Content-Type': 'application/javascript'
 		};
-		if (dynamic) headers['Cache-Control'] = 'no-cache, max-age=0';
+		if (dynamic) {
+			headers['Cache-Control'] = 'no-cache, max-age=0';
+		} else {
+			headers['Cache-Control'] = 'max-age=1';
+		}
 		res.writeHead(200, headers );
 		res.end(dynamic ? JSON.stringify(content): content);
 	},
