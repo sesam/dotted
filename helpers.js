@@ -24,11 +24,11 @@ module.exports = {
 			'Access-Control-Allow-Origin': '*',
 			'Content-Type': 'application/javascript'
 		};
-		if (dynamic) {
+		// if (dynamic) {
 			headers['Cache-Control'] = 'no-cache, max-age=0';
-		} else {
-			headers['Cache-Control'] = 'max-age=1';
-		}
+		// } else {
+			// headers['Cache-Control'] = 'max-age=1';
+		// }
 		res.writeHead(200, headers );
 		res.end(dynamic ? JSON.stringify(content): content);
 	},
@@ -38,6 +38,7 @@ module.exports = {
 	//
 	html: function(res, string) {
 		res.writeHead(200, {
+			'Cache-Control': 'no-cache, max-age=0',
 			'Content-Type': 'text/html'
 		});
 		res.end(string);
