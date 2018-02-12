@@ -20,3 +20,5 @@
 3222 rps for http://127.0.0.1:5001/data [29182b1-dirty]
 3604 rps for http://127.0.0.1:5005/ [c176ac4-dirty]
 3627 rps for http://127.0.0.1:5005/data [c176ac4-dirty]
+3352 rps for http://127.0.0.1:5002/ [a413aa6]
+4323 rps for http://127.0.0.1:5002/data [a413aa6]
