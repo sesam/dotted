@@ -34,7 +34,7 @@ function take_target(res) {
 		// todo: use params from response
 		js = JSON.parse(body);
 		target = Object.assign({}, deployed); // probably exactly what we want
-		target.port = js.port; // but let's make sure
+		target.port = js.port; // overwrite to be sure. todo: verify and log any "can't happen" events
 		target.major = js.major;
 		target.tag = js.tag;
 	});
@@ -46,7 +46,7 @@ function check_target() {
 
 	console.log(JSON.stringify(deployed) + ' vs \n' + JSON.stringify(current));
 	console.log('checking deploy ' + JSON.stringify(deployed));
-	// var deployed_url = 'http://' + ip + ':' + deployed.port + '/status';
+	// give ticker value so new instance can get started with a fallback (time, value)
 	var post_data = value + '\n' + (new Date()).valueOf();
 	var post_options = {
 	      host: ip,
